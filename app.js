@@ -15,6 +15,8 @@ function loadEventListeners() {
 	taskList.addEventListener('click', removeTask);
 	//CLEAR TASK EVENT
 	clearBtn.addEventListener('click', clearTasks);
+	//FILTER TASK EVENT
+	filter.addEventListener('keyup', filterTasks);
 }
 
 //ADD TASK FUNCTION
@@ -59,8 +61,27 @@ function removeTask(e) {
 
 //CLEAR TASKS FUNCTION
 function clearTasks(e) {
-	let childNodes = Array.from(taskList.childNodes);
-	childNodes.forEach(function(node){
-		taskList.removeChild(node);
+	let taskNodes = Array.from(taskList.childNodes);
+	taskNodes.forEach(function(task){
+		taskList.removeChild(task);
+	});
+}
+
+//FILTER TASKS FUNCTION
+function filterTasks(e) {
+	//grab what is being typed
+	const text = e.target.value.toLowerCase();
+
+	//grab all the list items - we can use a for each because querySelectorAll returns a node list
+	document.querySelectorAll('.collection-item').forEach(function(task){
+		const item = task.firstChild.textContent;
+		//if the text can be found, it will have a beginning index in this item
+		if (item.toLowerCase().indexOf(text) != -1) {
+			//show to task in the task list UI
+			task.style.display = 'block';
+		} else {
+			//hide the task that doesn't match
+			task.style.display = 'none';
+		}
 	});
 }
