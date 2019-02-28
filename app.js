@@ -11,6 +11,8 @@ loadEventListeners();
 function loadEventListeners() {
 	//ADD TASK EVENT
 	form.addEventListener('submit', addTask);
+	//REMOVE TASK EVENT
+	taskList.addEventListener('click', removeTask);
 }
 
 //ADD TASK FUNCTION
@@ -40,4 +42,15 @@ function addTask(e) {
 	//clear the input
 	taskInput.value = '';
 	e.preventDefault(); //prevent form submit
+}
+
+//REMOVE TASK FUNCTION
+function removeTask(e) {
+	//target the link, not the icon
+	if(e.target.parentElement.classList.contains('delete-item')){
+		if(confirm('Are you sure?')) {
+			//parent of the parent is the li
+			e.target.parentElement.parentElement.remove();
+		}
+	}
 }
